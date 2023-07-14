@@ -1,13 +1,13 @@
 /**
  * @type {import('next').NextConfig}
  */
-const nextConfig   = {
+const nextConfig = {
   output: 'export',
   images: {
     loader: 'akamai',
-    path: '',
+    path: 'detection-rules/',
   },
   assetPrefix: 'https://stevewritescode.github.io/detection-rules/',
 };
-  
+
 export default nextConfig;
