@@ -22,3 +22,6 @@ out
 
 # TypeScript cache
 tsconfig.tsbuildinfo
+
+#Bring back lib that is ignored at the top-level
+!lib
