@@ -6,7 +6,7 @@ const nextConfig   = {
       loader: 'akamai',
       path: '',
     },
-    assetPrefix: './',
+    assetPrefix: 'https://stevewritescode.github.io/detection-rules/',
   };
   
   export default   nextConfig;
