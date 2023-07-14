@@ -23,7 +23,7 @@ jobs:
         run: cd pages && npm ci
 
       - name: Build my App
-        run: cd pages && npm run build && npm run export && touch ./out/.nojekyll
+        run: cd pages && npm run build && touch ./out/.nojekyll
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.4.1
