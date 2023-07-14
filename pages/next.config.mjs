@@ -1,13 +1,12 @@
 /**
  * @type {import('next').NextConfig}
  */
+
+const isProd = process.env.NODE_ENV === 'production'
+
 const nextConfig = {
   output: 'export',
-  images: {
-    loader: 'akamai',
-    path: 'detection-rules/',
-  },
-  assetPrefix: 'https://stevewritescode.github.io/detection-rules/',
+  assetPrefix: isProd ? '/detection-rules/' : undefined
 };
 
 export default nextConfig;
