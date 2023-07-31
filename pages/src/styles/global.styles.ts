@@ -6,6 +6,5 @@ export const globalStyes = css`
     min-height: 100%;
     display: flex;
     flex-direction: column;
-    height: 100%;
   }
 `;
