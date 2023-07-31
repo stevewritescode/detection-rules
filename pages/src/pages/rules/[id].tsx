@@ -19,7 +19,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import Wrapper from '../../components/home/wrapper';
-import { ruleDetailsStyles } from './rule_details.styles';
+import { ruleDetailsStyles } from '../../components/details/rule_details.styles';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const ids = fs.readdirSync(path.join(__dirname, '../../../../src/data/'));
