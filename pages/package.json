@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "tsc parseRuleData.ts && node parseRuleData.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -14,14 +15,17 @@
     "@emotion/cache": "^11.10.3",
     "@emotion/react": "^11.10.4",
     "core-js": "^3.25.1",
-    "regenerator-runtime": "^0.13.9"
+    "react-lazy-load": "^4.0.1",
+    "regenerator-runtime": "^0.13.9",
+    "toml": "^3.0.0"
   },
   "devDependencies": {
     "@elastic/datemath": "^5.0.3",
     "@emotion/babel-plugin": "^11.10.2",
-    "@next/bundle-analyzer": "^12.3.1",
+    "@next/bundle-analyzer": "^12.3.4",
     "@types/node": "^16.11.10",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "axios": "^1.4.0",
     "copy-webpack-plugin": "^10.0.0",
     "eslint": "<8.0.0",
     "eslint-config-next": "12.0.4",

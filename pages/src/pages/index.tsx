@@ -1,12 +1,50 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState, useMemo } from 'react';
 import Head from 'next/head';
-import { EuiSpacer } from '@elastic/eui';
-import HomeHero from '../components/starter/home_hero';
-import Wrapper from '../components/starter/wrapper';
-import HomeTemplates from '../components/starter/home_templates';
-import HomeWhy from '../components/starter/home_why';
+import HomeHero from '../components/home/home_hero';
+import Wrapper from '../components/home/wrapper';
+import RuleList from '../components/home/rule_list';
+
+import newestRules from '../data/newestRules.json';
 
 const Index: FunctionComponent = () => {
+  const [searchFilter, setSearchFilter] = useState('');
+  const [tagFilter, setTagFilter] = useState([]);
+
+  const rules = useMemo(() => {
+    console.log('usememo');
+    const start = Date.now();
+    const newRules = newestRules.filter(function (r) {
+      if (
+        searchFilter &&
+        !r.name.toLowerCase().includes(searchFilter.toLowerCase())
+      ) {
+        return false;
+      }
+      if (tagFilter.length > 0) {
+        if (r.tags.filter(t => tagFilter.includes(t)).length == 0) {
+          return false;
+        }
+      }
+      return true;
+    });
+    console.log('end');
+    const end = Date.now();
+    console.log(`Execution time: ${end - start} ms`);
+    return newRules;
+  }, [searchFilter, tagFilter]);
+
+  const updateTagFilter = function (
+    tagsToAdd: string[],
+    tagsToRemove: string[]
+  ) {
+    console.log(tagFilter);
+    console.log(tagsToAdd);
+    console.log(tagsToRemove);
+    setTagFilter(
+      tagFilter.filter(x => !tagsToRemove.includes(x)).concat(tagsToAdd)
+    );
+  };
+
   return (
     <>
       <Head>
@@ -14,21 +52,14 @@ const Index: FunctionComponent = () => {
       </Head>
 
       <Wrapper>
-        <HomeHero />
-
-        <EuiSpacer size="xxl" />
-        <EuiSpacer size="xxl" />
-
-        <HomeWhy />
-
-        <EuiSpacer size="xxl" />
-        <EuiSpacer size="xxl" />
-        <EuiSpacer size="xxl" />
-
-        <HomeTemplates />
-
-        <EuiSpacer size="xxl" />
-        <EuiSpacer size="xxl" />
+        <HomeHero
+          rules={rules}
+          searchFilter={searchFilter}
+          tagFilter={tagFilter}
+          onSearchChange={setSearchFilter}
+          onTagChange={updateTagFilter}
+        />
+        <RuleList rules={rules} />
       </Wrapper>
     </>
   );

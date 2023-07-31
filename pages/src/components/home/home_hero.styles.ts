@@ -2,7 +2,8 @@ import { css } from '@emotion/react';
 
 export const homeHeroStyles = euiTheme => ({
   container: css`
-    padding-bottom: ${euiTheme.size.base};
+    max-width: 800px;
+    margin: auto !important;
 
     @media (max-width: ${euiTheme.breakpoint.m}px) {
       text-align: center;
@@ -11,6 +12,8 @@ export const homeHeroStyles = euiTheme => ({
         order: 2;
       }
     }
+
+    text-align: center;
   `,
   title: css`
     @media (min-width: ${euiTheme.breakpoint.m}px) {
@@ -25,5 +28,26 @@ export const homeHeroStyles = euiTheme => ({
     @media (max-width: ${euiTheme.breakpoint.m}px) {
       align-self: center;
     }
+  `,
+  aligned: css`
+    vertical-align: middle;
+    margin-right: 3px;
+    font-weight: bold;
+  `,
+  accordian: css`
+    margin: auto;
+
+    .euiAccordion__triggerWrapper {
+      display: inline-flex;
+    }
+
+    button {
+      flex-grow: 0;
+      inline-size: auto;
+    }
+  `,
+  search: css`
+    width: 500px;
+    margin: auto;
   `,
 });

@@ -15,7 +15,7 @@ import Logo from '../../../public/images/logo-eui.svg';
 
 const Header = () => {
   const { euiTheme } = useEuiTheme();
-  const href = 'https://github.com/elastic/next-eui-starter';
+  const href = 'https://github.com/elastic/detection-rules';
   const label = 'EUI GitHub repo';
   const styles = headerStyles(euiTheme);
 
@@ -27,15 +27,9 @@ const Header = () => {
           items: [
             <Link key="logo-eui" href="/" passHref>
               <a css={styles.logo}>
-                <Image
-                  width={24}
-                  height={24}
-                  src={Logo}
-                  alt=""
-                  loader={imageLoader}
-                />
+                <EuiIcon type="logoSecurity" size="l" />
                 <EuiTitle size="xxs" css={styles.title}>
-                  <span>Next.js EUI Starter</span>
+                  <span>Elastic Security Detection Rules</span>
                 </EuiTitle>
               </a>
             </Link>,

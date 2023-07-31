@@ -25,3 +25,7 @@ tsconfig.tsbuildinfo
 
 #Bring back lib that is ignored at the top-level
 !lib
+
+#calculated rule data
+src/data/**
+parseRuleData.js

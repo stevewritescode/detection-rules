@@ -54,12 +54,12 @@ export default class MyDocument extends Document {
         <Head>
           <meta
             name="description"
-            content="The Next.js EUI Starter uses Next.js, EUI library, and Emotion to help you make prototypes. You just need to know a few basic Next.js concepts and how to use EUI and you're ready to ship it!"
+            content="Detection Rules is the home for rules used by Elastic Security."
           />
           <meta property="og:title" content="Elastic UI" />
           <meta
             property="og:description"
-            content="The Next.js EUI Starter uses Next.js, EUI library, and Emotion to help you make prototypes. You just need to know a few basic Next.js concepts and how to use EUI and you're ready to ship it!"
+            content="Detection Rules is the home for rules used by Elastic Security."
           />
           <meta
             property="og:image"
