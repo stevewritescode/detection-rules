@@ -134,7 +134,7 @@ async function precomputeRuleSummaries() {
 
   const tagSummaries = new Map<string, TagSummary>();
 
-  fs.mkdirSync('./src/data');
+  fs.mkdirSync('./src/data/rules', { recursive: true });
 
   await getLocalRules(ruleSummaries, tagSummaries);
   await getIntegrationRules('dga', 'DGA', ruleSummaries, tagSummaries);

@@ -22,7 +22,9 @@ import Wrapper from '../../components/home/wrapper';
 import { ruleDetailsStyles } from '../../components/details/rule_details.styles';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const ids = fs.readdirSync(path.join(__dirname, '../../../../src/data/'));
+  const ids = fs.readdirSync(
+    path.join(__dirname, '../../../../src/data/rules')
+  );
   return {
     paths: ids.map(x => {
       console.log(path.parse(x).name);
@@ -41,7 +43,7 @@ export const getStaticProps: GetStaticProps<{
 }> = ({ params }) => {
   const res = JSON.parse(
     fs.readFileSync(
-      path.join(__dirname, `../../../../src/data/${params.id}.json`),
+      path.join(__dirname, `../../../../src/data/rules/${params.id}.json`),
       'utf8'
     )
   );
@@ -53,17 +55,6 @@ export default function RuleDetails({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { euiTheme } = useEuiTheme();
   const styles = ruleDetailsStyles(euiTheme);
-
-  //const rule = getRuleDetails(router.query.id);
-  /*
-  const rule = newestRules.reduce((r, v) => {
-    if (router.query.id && v.id == router.query.id) {
-      r = v;
-    }
-    return r;
-  }, null);
-*/
-  console.log(rule);
 
   const ruleCreated =
     rule.metadata.creation_date &&
