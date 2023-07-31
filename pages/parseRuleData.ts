@@ -40,8 +40,6 @@ async function getLocalRules(
     ignore: '../rules/_deprecated/**',
   });
 
-  const types = {};
-
   for (const f of ruleFiles) {
     const ruleContent = toml.parse(fs.readFileSync(f, 'utf8'));
     ruleSummaries.push({
@@ -135,6 +133,8 @@ async function precomputeRuleSummaries() {
   const ruleSummaries: RuleSummary[] = [];
 
   const tagSummaries = new Map<string, TagSummary>();
+
+  fs.mkdirSync('./src/data');
 
   await getLocalRules(ruleSummaries, tagSummaries);
   await getIntegrationRules('dga', 'DGA', ruleSummaries, tagSummaries);
