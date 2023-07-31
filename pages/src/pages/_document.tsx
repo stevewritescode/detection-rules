@@ -56,25 +56,17 @@ export default class MyDocument extends Document {
             name="description"
             content="Detection Rules is the home for rules used by Elastic Security."
           />
-          <meta property="og:title" content="Elastic UI" />
+          <meta property="og:title" content="Elastic Detection Rules" />
           <meta
             property="og:description"
             content="Detection Rules is the home for rules used by Elastic Security."
           />
           <meta
-            property="og:image"
-            content="https://repository-images.githubusercontent.com/233832487/cddf0ff5-a35f-4380-8912-1c9f365366a8"
-          />
-          <meta
             property="og:url"
-            content="https://elastic.github.io/next-eui-starter/"
+            content="https://github.com/elastic/detection-rules"
           />
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="eui-styles" />
 
           {themeConfig.availableThemes.map(each => themeLink(each))}
-
-          <meta name="eui-styles-utility" />
 
           <link
             rel="icon"
