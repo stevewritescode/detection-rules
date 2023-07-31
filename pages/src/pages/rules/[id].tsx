@@ -21,10 +21,10 @@ import * as path from 'path';
 import Wrapper from '../../components/home/wrapper';
 import { ruleDetailsStyles } from '../../components/details/rule_details.styles';
 
+const RULES_OUTPUT_PATH = '../../../../src/data/rules/';
+
 export const getStaticPaths: GetStaticPaths = async () => {
-  const ids = fs.readdirSync(
-    path.join(__dirname, '../../../../src/data/rules')
-  );
+  const ids = fs.readdirSync(path.join(__dirname, RULES_OUTPUT_PATH));
   return {
     paths: ids.map(x => {
       console.log(path.parse(x).name);
@@ -43,7 +43,7 @@ export const getStaticProps: GetStaticProps<{
 }> = ({ params }) => {
   const res = JSON.parse(
     fs.readFileSync(
-      path.join(__dirname, `../../../../src/data/rules/${params.id}.json`),
+      path.join(__dirname, `${RULES_OUTPUT_PATH}${params.id}.json`),
       'utf8'
     )
   );

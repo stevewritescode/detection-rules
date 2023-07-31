@@ -32,6 +32,8 @@ function addTagSummary(t: string, tagSummaries: Map<string, TagSummary>) {
   tagSummaries.set(t, s);
 }
 
+const RULES_OUTPUT_PATH = './src/data/rules/';
+
 async function getLocalRules(
   ruleSummaries: RuleSummary[],
   tagSummaries: Map<string, TagSummary>
@@ -54,7 +56,7 @@ async function getLocalRules(
       addTagSummary(t, tagSummaries);
     }
     fs.writeFileSync(
-      `./src/data/${ruleContent.rule.rule_id}.json`,
+      `${RULES_OUTPUT_PATH}${ruleContent.rule.rule_id}.json`,
       JSON.stringify(ruleContent)
     );
   }
@@ -120,7 +122,7 @@ async function getIntegrationRules(
     };
     mappedRuleContent.rule.tags = tags;
     fs.writeFileSync(
-      `./src/data/${ruleContent.data.id}.json`,
+      `${RULES_OUTPUT_PATH}${ruleContent.data.id}.json`,
       JSON.stringify(mappedRuleContent)
     );
   }
@@ -134,7 +136,7 @@ async function precomputeRuleSummaries() {
 
   const tagSummaries = new Map<string, TagSummary>();
 
-  fs.mkdirSync('./src/data/rules', { recursive: true });
+  fs.mkdirSync(RULES_OUTPUT_PATH, { recursive: true });
 
   await getLocalRules(ruleSummaries, tagSummaries);
   await getIntegrationRules('dga', 'DGA', ruleSummaries, tagSummaries);
