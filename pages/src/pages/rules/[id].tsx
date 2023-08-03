@@ -190,7 +190,7 @@ export default function RuleDetails({
           case 'threshold':
             return 'Threshold Rule';
           case 'threat_match':
-            return 'Thread Match Rule';
+            return 'Threat Match Rule';
           case 'new_terms':
             return 'New Terms Rule';
           case 'machine_learning':
