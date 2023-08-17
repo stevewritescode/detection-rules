@@ -14,6 +14,7 @@ import { rulePanelStyles } from './rule_panel.styles';
 import moment from 'moment';
 
 import { RuleSummary } from '../../types';
+import { ruleFilterTypeMap } from '../../lib/ruledata';
 
 interface RulePanelProps {
   rule: RuleSummary;
@@ -26,7 +27,7 @@ const RulePanel: FunctionComponent<RulePanelProps> = ({ children, rule }) => {
     <EuiFlexItem css={styles.item}>
       <EuiPanel>
         <EuiText>
-          <Link href={`/rules/${rule.id}`}>
+          <Link href={`/rules/${rule.id}`} passHref>
             <EuiLink color="text" onClick={null} css={styles.link}>
               {rule.name}
             </EuiLink>
@@ -35,46 +36,23 @@ const RulePanel: FunctionComponent<RulePanelProps> = ({ children, rule }) => {
         <LazyLoad>
           <>
             <EuiSpacer size="xs" />
-            {rule.tags.map((t, i) => {
-              if (t.startsWith('Resources')) {
-                return <></>;
-              }
-              let color = 'hollow';
-              let icon = '';
-              if (t.startsWith('Domain')) {
-                color = 'accent';
-                icon = 'globe';
-              }
-              if (t.startsWith('Use Case')) {
-                color = 'primary';
-                icon = 'launch';
-              }
-              if (t.startsWith('Data Source')) {
-                color = 'default';
-                icon = 'database';
-              }
-              if (t.startsWith('OS')) {
-                color = 'success';
-                icon = 'compute';
-              }
-              if (t.startsWith('Tactic')) {
-                color = 'warning';
-                icon = 'bug';
-              }
-              if (t.startsWith('Rule Type')) {
-                color = 'hollow';
-                icon = 'layers';
-              }
-              return (
-                <EuiBadge
-                  iconType={icon}
-                  color={color}
-                  css={styles.badge}
-                  key={i}>
-                  {t}
-                </EuiBadge>
-              );
-            })}
+            {rule.tags
+              .filter(t => !t.startsWith('Resources'))
+              .map((t, i) => {
+                const badgeTheme = ruleFilterTypeMap[t.split(': ')[0]] || {
+                  color: 'hollow',
+                  icon: '',
+                };
+                return (
+                  <EuiBadge
+                    iconType={badgeTheme.icon}
+                    color={badgeTheme.color}
+                    css={styles.badge}
+                    key={i}>
+                    {t}
+                  </EuiBadge>
+                );
+              })}
             <EuiSpacer size="xs" />
             <EuiText size="xs">
               <p>

@@ -7,6 +7,7 @@ import {
   EuiSpacer,
   EuiLink,
   EuiPanel,
+  EuiFlexGrid,
   EuiFieldSearch,
   EuiAccordion,
   EuiFormRow,
@@ -17,21 +18,21 @@ import { useEuiTheme } from '@elastic/eui';
 
 import RuleFilter from './rule_filter';
 
-import tagSummaries from '../../data/tagSummaries.json';
-
-import { RuleSummary } from '../../types';
+import { RuleSummary, TagSummary } from '../../types';
 
 interface RuleFilterProps {
   rules: RuleSummary[];
+  tagSummaries: TagSummary[];
   searchFilter: string;
   tagFilter: string[];
   onSearchChange: (e: string) => void;
-  onTagChange: (add: string[], remove: string[]) => void;
+  onTagChange: (type: string, selected: string[]) => void;
 }
 
 const HomeHero: FunctionComponent<RuleFilterProps> = ({
   children,
   rules,
+  tagSummaries,
   searchFilter,
   tagFilter,
   onSearchChange,
@@ -89,87 +90,68 @@ const HomeHero: FunctionComponent<RuleFilterProps> = ({
         <EuiSpacer size="l" />
 
         <EuiFormRow fullWidth css={styles.search}>
-          <EuiFieldSearch
-            placeholder={`Search ${rules.length} rules`}
-            value={displaySearchTerm}
-            onChange={e => onSearchBoxChange(e)}
-            fullWidth
-          />
+          <EuiPanel>
+            <EuiFieldSearch
+              placeholder={`Search ${rules.length} rules by name`}
+              value={displaySearchTerm}
+              onChange={e => onSearchBoxChange(e)}
+              fullWidth
+            />
+          </EuiPanel>
         </EuiFormRow>
         <EuiSpacer size="m" />
 
-        <EuiAccordion
-          id={useGeneratedHtmlId({
-            prefix: 'rightArrowAccordion',
-          })}
-          arrowDisplay="right"
-          buttonContent={
-            <EuiText size="m">
-              <p>
-                <span css={styles.aligned}>Filter by Tag</span>
-              </p>
-            </EuiText>
-          }
-          css={styles.accordian}>
-          <EuiSpacer size="s" />
-          <EuiPanel>
-            <RuleFilter
-              displayName="Domains"
-              icon="globe"
-              tagList={tagSummaries.filter(x => x.tag_type == 'Domain')}
-              tagFilter={tagFilter}
-              onTagChange={onTagChange}
-            />
-            <EuiSpacer size="s" />
+        <EuiFlexGrid css={styles.grid}>
+          <RuleFilter
+            displayName="Domains"
+            icon="globe"
+            tagList={tagSummaries.filter(x => x.tag_type == 'Domain')}
+            tagFilter={tagFilter}
+            onTagChange={onTagChange}
+          />
 
-            <RuleFilter
-              displayName="Rule Types"
-              icon="layers"
-              tagList={tagSummaries.filter(
-                x => x.tag_type == 'Rule Type' && x.tag_name != 'ML'
-              )}
-              tagFilter={tagFilter}
-              onTagChange={onTagChange}
-            />
-            <EuiSpacer size="s" />
+          <RuleFilter
+            displayName="Rule Types"
+            icon="layers"
+            tagList={tagSummaries.filter(
+              x => x.tag_type == 'Rule Type' && x.tag_name != 'ML'
+            )}
+            tagFilter={tagFilter}
+            onTagChange={onTagChange}
+          />
 
-            <RuleFilter
-              displayName="Operating Systems"
-              icon="compute"
-              tagList={tagSummaries.filter(x => x.tag_type == 'OS')}
-              tagFilter={tagFilter}
-              onTagChange={onTagChange}
-            />
-            <EuiSpacer size="s" />
+          <RuleFilter
+            displayName="Operating Systems"
+            icon="compute"
+            tagList={tagSummaries.filter(x => x.tag_type == 'OS')}
+            tagFilter={tagFilter}
+            onTagChange={onTagChange}
+          />
 
-            <RuleFilter
-              displayName="Use Cases"
-              icon="launch"
-              tagList={tagSummaries.filter(x => x.tag_type == 'Use Case')}
-              tagFilter={tagFilter}
-              onTagChange={onTagChange}
-            />
-            <EuiSpacer size="s" />
+          <RuleFilter
+            displayName="Use Cases"
+            icon="launch"
+            tagList={tagSummaries.filter(x => x.tag_type == 'Use Case')}
+            tagFilter={tagFilter}
+            onTagChange={onTagChange}
+          />
 
-            <RuleFilter
-              displayName="Tactics"
-              icon="bug"
-              tagList={tagSummaries.filter(x => x.tag_type == 'Tactic')}
-              tagFilter={tagFilter}
-              onTagChange={onTagChange}
-            />
-            <EuiSpacer size="s" />
+          <RuleFilter
+            displayName="Tactics"
+            icon="bug"
+            tagList={tagSummaries.filter(x => x.tag_type == 'Tactic')}
+            tagFilter={tagFilter}
+            onTagChange={onTagChange}
+          />
 
-            <RuleFilter
-              displayName="Data Sources"
-              icon="database"
-              tagList={tagSummaries.filter(x => x.tag_type == 'Data Source')}
-              tagFilter={tagFilter}
-              onTagChange={onTagChange}
-            />
-            <EuiSpacer size="s" />
-          </EuiPanel>
-        </EuiAccordion>
+          <RuleFilter
+            displayName="Data Sources"
+            icon="database"
+            tagList={tagSummaries.filter(x => x.tag_type == 'Data Source')}
+            tagFilter={tagFilter}
+            onTagChange={onTagChange}
+          />
+        </EuiFlexGrid>
       </EuiFlexItem>
     </EuiFlexGroup>
   );

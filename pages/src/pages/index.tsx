@@ -5,14 +5,15 @@ import Wrapper from '../components/home/wrapper';
 import RuleList from '../components/home/rule_list';
 
 import newestRules from '../data/newestRules.json';
+import tagSummaries from '../data/tagSummaries.json';
+
+import { TagSummary } from '../types';
 
 const Index: FunctionComponent = () => {
   const [searchFilter, setSearchFilter] = useState('');
   const [tagFilter, setTagFilter] = useState([]);
 
   const rules = useMemo(() => {
-    console.log('usememo');
-    const start = Date.now();
     const newRules = newestRules.filter(function (r) {
       if (
         searchFilter &&
@@ -20,29 +21,40 @@ const Index: FunctionComponent = () => {
       ) {
         return false;
       }
-      if (tagFilter.length > 0) {
-        if (r.tags.filter(t => tagFilter.includes(t)).length == 0) {
-          return false;
-        }
+      if (tagFilter.length > 0 && !tagFilter.every(t => r.tags.includes(t))) {
+        return false;
       }
       return true;
     });
-    console.log('end');
-    const end = Date.now();
-    console.log(`Execution time: ${end - start} ms`);
     return newRules;
   }, [searchFilter, tagFilter]);
 
-  const updateTagFilter = function (
-    tagsToAdd: string[],
-    tagsToRemove: string[]
-  ) {
-    console.log(tagFilter);
-    console.log(tagsToAdd);
-    console.log(tagsToRemove);
-    setTagFilter(
-      tagFilter.filter(x => !tagsToRemove.includes(x)).concat(tagsToAdd)
-    );
+  const filteredTagSummaries = useMemo(() => {
+    const tagSummariesMap = new Map<string, TagSummary>();
+    for (const t of tagSummaries) {
+      tagSummariesMap.set(t.tag_full, {
+        tag_full: t.tag_full,
+        tag_name: t.tag_name,
+        tag_type: t.tag_type,
+        count: 0,
+      });
+    }
+    for (const r of rules) {
+      for (const t of r.tags) {
+        const parts = t.split(': ');
+        const s = tagSummariesMap.get(t);
+        if (parts.length != 2 || s == undefined) {
+          continue;
+        }
+        s.count++;
+        tagSummariesMap.set(t, s);
+      }
+    }
+    return Array.from(tagSummariesMap.values());
+  }, [rules]);
+
+  const updateTagFilter = function (type: string, selected: string[]) {
+    setTagFilter(tagFilter.filter(x => !x.startsWith(type)).concat(selected));
   };
 
   return (
@@ -54,6 +66,7 @@ const Index: FunctionComponent = () => {
       <Wrapper>
         <HomeHero
           rules={rules}
+          tagSummaries={filteredTagSummaries}
           searchFilter={searchFilter}
           tagFilter={tagFilter}
           onSearchChange={setSearchFilter}

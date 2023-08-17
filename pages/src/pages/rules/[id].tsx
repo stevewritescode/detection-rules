@@ -20,6 +20,7 @@ import * as path from 'path';
 
 import Wrapper from '../../components/home/wrapper';
 import { ruleDetailsStyles } from '../../components/details/rule_details.styles';
+import { ruleFilterTypeMap } from '../../lib/ruledata';
 
 const RULES_OUTPUT_PATH = '../../../../src/data/rules/';
 
@@ -70,34 +71,16 @@ export default function RuleDetails({
         if (t.startsWith('Resources')) {
           return <></>;
         }
-        let color = 'hollow';
-        let icon = '';
-        if (t.startsWith('Domain')) {
-          color = 'accent';
-          icon = 'globe';
-        }
-        if (t.startsWith('Use Case')) {
-          color = 'primary';
-          icon = 'launch';
-        }
-        if (t.startsWith('Data Source')) {
-          color = 'default';
-          icon = 'database';
-        }
-        if (t.startsWith('OS')) {
-          color = 'success';
-          icon = 'compute';
-        }
-        if (t.startsWith('Tactic')) {
-          color = 'warning';
-          icon = 'bug';
-        }
-        if (t.startsWith('Rule Type')) {
-          color = 'hollow';
-          icon = 'layers';
-        }
+        const badgeTheme = ruleFilterTypeMap[t.split(': ')[0]] || {
+          color: 'hollow',
+          icon: '',
+        };
         return (
-          <EuiBadge iconType={icon} color={color} css={styles.badge} key={i}>
+          <EuiBadge
+            iconType={badgeTheme.icon}
+            color={badgeTheme.color}
+            css={styles.badge}
+            key={i}>
             {t}
           </EuiBadge>
         );

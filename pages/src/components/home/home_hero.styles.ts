@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 
 export const homeHeroStyles = euiTheme => ({
   container: css`
-    max-width: 800px;
+    max-width: 1000px;
     margin: auto !important;
 
     @media (max-width: ${euiTheme.breakpoint.m}px) {
@@ -49,5 +49,8 @@ export const homeHeroStyles = euiTheme => ({
   search: css`
     width: 500px;
     margin: auto;
+  `,
+  grid: css`
+    justify-content: center;
   `,
 });
