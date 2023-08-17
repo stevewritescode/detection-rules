@@ -52,6 +52,9 @@ const RuleFilter: FunctionComponent<RuleFilterProps> = ({
       </EuiText>
       <EuiComboBox
         css={styles.combo}
+        placeholder={`Filter by ${
+          options.filter(o => o.value.count > 0).length
+        } ${displayName}`}
         options={options}
         selectedOptions={selectedOptions}
         isClearable={true}
