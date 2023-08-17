@@ -6,6 +6,9 @@ name: GitHub Pages deploy
 on:
   push:
     branches: [gh-pages-dev]
+  schedule:
+    # update the site with newest rules once per day
+    - cron:  '15 0 * * *'
 
 jobs:
   build:
